@@ -52,3 +52,10 @@ class Channel:
 
         youtube = build('youtube', 'v3', developerKey=api_key)
         return youtube
+
+    @property
+    def channel_id(self):
+        """
+        Возвращает id канала
+        """
+        return self.__channel_id
