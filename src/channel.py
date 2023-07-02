@@ -23,7 +23,9 @@ class Channel:
     youtube = build('youtube', 'v3', developerKey=api_key)
 
     def __init__(self, channel_id: str) -> None:
-        """Экземпляр инициализируется по id канала. Дальше все данные будут подтягиваться по API."""
+        """
+        Экземпляр инициализируется по id канала. Дальше все данные будут подтягиваться по API.
+        """
 
         self.__channel_id = channel_id
 
@@ -35,20 +37,74 @@ class Channel:
         self.video_count = self.channel["items"][0]["statistics"]["videoCount"]
         self.views_count = self.channel["items"][0]["statistics"]["viewCount"]
 
+    def __str__(self):
+        """
+        Возвращает название канала и ссылку на него
+        """
+        return f"{self.title}({self.url})"
+
+    def __add__(self, other):
+        """
+        Определяет сумму подписчиков двух каналов
+        """
+        return int(self.subscribers_count) + int(other.subscribers_count)
+
+    def __sub__(self, other):
+        """
+        Определяет разность подписчиков двух каналов
+        """
+        return int(self.subscribers_count) - int(other.subscribers_count)
+
+    def __gt__(self, other):
+        """
+        Сравнивает количество подписчиков двух каналов методом больше
+        """
+        return int(self.subscribers_count) > int(other.subscribers_count)
+
+    def __ge__(self, other):
+        """
+        Сравнивает количество подписчиков двух каналов методом больше/равно
+        """
+        return int(self.subscribers_count) >= int(other.subscribers_count)
+
+    def __lt__(self, other):
+        """
+        Сравнивает количество подписчиков двух каналов методом меньше
+        """
+        return int(self.subscribers_count) < int(other.subscribers_count)
+
+    def __le__(self, other):
+        """
+        Сравнивает количество подписчиков двух каналов методом меньше/равно
+        """
+        return int(self.subscribers_count) <= int(other.subscribers_count)
+
+    def __eq__(self, other):
+        """
+        Сравнивает количество подписчиков двух каналов методом равно
+        """
+        return int(self.subscribers_count) == int(other.subscribers_count)
+
     def print_info(self) -> None:
-        """Выводит в консоль общую информацию о канале."""
+        """
+        Выводит в консоль общую информацию о канале.
+        """
 
         return print(self.channel)
 
     def to_json(self, json_name=''):
-        """Создает файл moscowpython.json и сохраняет в нем значения атрибутов экземпляра"""
+        """
+        Создает файл moscowpython.json и сохраняет в нем значения атрибутов экземпляра
+        """
 
         with open(json_name, "w", encoding="utf-8") as write_file:
             return json.dump(self.__dict__, write_file, indent=2, ensure_ascii=False)
 
     @classmethod
     def get_service(cls):
-        """Возвращает объект для работы с YouTube API вне класса"""
+        """
+        Возвращает объект для работы с YouTube API вне класса
+        """
 
         youtube = build('youtube', 'v3', developerKey=api_key)
         return youtube
