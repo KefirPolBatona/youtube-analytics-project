@@ -115,3 +115,7 @@ class Channel:
         Возвращает id канала
         """
         return self.__channel_id
+
+    @channel_id.setter
+    def channel_id(self, name):
+        raise AttributeError("property 'channel_id' of 'Channel' object has no setter")
